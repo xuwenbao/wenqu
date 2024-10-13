@@ -87,11 +87,7 @@ class MarkdownTextSplitter(RecursiveCharacterTextSplitter):
                 }
             # 标题下的章节文本内容
             elif section_type == "text":
-
-                cleand_section_text = section_text
-                for chunk in self._split_text(cleand_section_text.strip(), self._separators):
-                    chunk_page_idxs, chunk_positions = self.get_chunk_positions(chunk, section_text)
-
+                for chunk in self._split_text(section_text.strip(), self._separators):
                     yield chunk, {
                         "title": header_text,
                         "type": section_type,
