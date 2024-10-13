@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "wenqu"
+version = "0.1.0"
+description = "生产级RAG（Retrieval Augmented Generation）框架，支持PDF/DOCX/DOC/PPTX/EXCEL/MARKDOWN/TXT等多种文件解析，以模块化方式构建RAG流程。"
+authors = ["Wenbao Xu <xu-wenbao@foxmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+markdown-it-py = "^3.0.0"
+mdformat = "^0.7.17"
+mdformat-gfm = "^0.3.6"
+mdformat-tables = "^1.0.0"
+linkify-it-py = "^2.0.3"
+langchain = "^0.3.3"
+loguru = "^0.7.2"
+more-itertools = "^10.5.0"
+beautifulsoup4 = "^4.12.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
