@@ -6,16 +6,18 @@ authors = ["Wenbao Xu <xu-wenbao@foxmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10,<3.13"
 markdown-it-py = "^3.0.0"
 mdformat = "^0.7.17"
 mdformat-gfm = "^0.3.6"
 mdformat-tables = "^1.0.0"
 linkify-it-py = "^2.0.3"
-langchain = "^0.3.3"
+langchain = ">=0.2,<0.3"
 loguru = "^0.7.2"
 more-itertools = "^10.5.0"
 beautifulsoup4 = "^4.12.3"
+blinker = "^1.8.2"
+fast-langdetect = "^0.2.2"
 
 [tool.poetry.group.test]
 optional = true
@@ -23,6 +25,11 @@ optional = true
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
+
+
+[tool.poetry.group.dev.dependencies]
+ragas = "^0.1.21"
+jupyterlab = "^4.2.5"
 
 [build-system]
 requires = ["poetry-core"]

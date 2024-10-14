@@ -169,3 +169,4 @@ cython_debug/
 tests/
 conftest.py
 pytest.ini
+docs/experiments/
