@@ -129,8 +129,7 @@ class MarkdownTextSplitter(RecursiveCharacterTextSplitter):
         except Exception as e:
             # TODO: 考虑Markdown出现非法语法情况时的处理方式
             # 出现渲染异常的情况下，记录日志并返回空字符串
-            logger.warning(f"Error when rendering node: {node.pretty(indent=2, show_text=True)}")
-            logger.exception(e)
+            logger.warning(f"Exception {e} when rendering node:\n {node.pretty(indent=2, show_text=True)}")
             return ""
     
     def _get_nodes_nontext_contents(
