@@ -17,6 +17,12 @@ loguru = "^0.7.2"
 more-itertools = "^10.5.0"
 beautifulsoup4 = "^4.12.3"
 
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
 
 [build-system]
 requires = ["poetry-core"]
