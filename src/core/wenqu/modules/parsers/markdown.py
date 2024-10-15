@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List, Optional
 
+import pandas as pd
 from loguru import logger
 from langchain.docstore.document import Document
 from langchain.text_splitter import TextSplitter
@@ -8,6 +9,7 @@ from langchain.text_splitter import TextSplitter
 from wenqu.modules.rw import ReaderWriter
 from wenqu.constants import CHINESE_SEPARATOR
 from wenqu.modules.parsers.txt import TXTParser
+from wenqu.utils.markdown import remove_comments
 from wenqu.modules.splitters.markdown import MarkdownTextSplitter
 
 
@@ -16,6 +18,11 @@ class MarkdownParser(TXTParser):
     supported_file_extensions = [
         ".md",
     ]
+
+    async def get_dataframe(self, filepath_or_content: str | bytes | Path, metadata: dict = None, image_writer: ReaderWriter = None,
+                           file_extension: str = None, *args, **kwargs) -> pd.DataFrame:
+        chunks = await self.get_chunks(filepath_or_content, metadata, image_writer, file_extension, *args, **kwargs)
+        return self.chunks_to_dataframe(chunks)
 
     async def get_chunks(self, filepath_or_content: str | bytes | Path, metadata: dict = None, image_writer: ReaderWriter = None,
                          file_extension: str = None, *args, **kwargs) -> List[Document]:
@@ -38,7 +45,7 @@ class MarkdownParser(TXTParser):
                 "metadata": metadata,
                 "file_extension": file_extension,
             })
-            return content
+            return remove_comments(content)
         
     async def get_splitter(self, text) -> TextSplitter:
         lang = self.get_language(text)

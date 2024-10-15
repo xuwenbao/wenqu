@@ -5,6 +5,7 @@ from collections import defaultdict
 from contextlib import contextmanager
 from typing import Optional, List, Literal
 
+import pandas as pd
 from loguru import logger
 from blinker import Namespace
 from fast_langdetect import detect_language
@@ -47,6 +48,36 @@ class BaseParser(ABC):
         **kwargs,
     ) -> List[Document]:
         pass
+
+    @abstractmethod
+    async def get_dataframe(
+        self,
+        filepath_or_content: str | bytes | Path,
+        metadata: Optional[dict] = None,
+        file_extension: str = None,
+        *args,
+        **kwargs,
+    ) -> pd.DataFrame:
+        pass
+
+    @staticmethod
+    def chunks_to_dataframe(chunks: List[Document]) -> pd.DataFrame: # TODO: 优化实现，动态设置元数据默认值
+        """
+        将一系列文档块转换为pandas DataFrame。
+        """
+        # 将chunk的page_content属性和metadata属性合并，形成字典
+        data = []
+        for chunk in chunks:
+            chunk_dict = chunk.metadata.copy()
+            chunk_dict["content"] = chunk.page_content
+            
+            # 统一列表中的key，如：title不存在时，设置为空字符串，image_url不存在时，设置为空字符串
+            chunk_dict.setdefault("title", "")
+            chunk_dict.setdefault("image_url", "")
+            
+            data.append(chunk_dict)
+        
+        return pd.DataFrame(data)
 
     @staticmethod
     def get_language(text: str) -> Literal["EN", "ZH"]:
